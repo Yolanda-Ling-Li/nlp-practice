@@ -89,5 +89,7 @@ PPS. 预测模块还没有调试完毕，应该无法执行
 3. 系统运行完后会存储模型和参数
  
      * Model1.hdf5
-     * Model1.hdf5
+     * Model2.hdf5
+     * x.npy
+     * y.npy
      * Word2vec_model.pkl

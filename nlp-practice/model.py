@@ -13,7 +13,7 @@ from gensim.corpora.dictionary import Dictionary
 
 
 
-def Embedding_CNN_LSTM_Model(config):
+def embedding_cnn_lstm_model(config):
 
     # embedding layer
     model = Sequential()
@@ -59,7 +59,7 @@ def create_dictionaries(vocab_dim,max_len,model=None, combine=None):
 
 
 #创建词语字典，并返回词典大小，权重矩阵以及每个词语索引矩阵
-def Word2Vec_Model(config,combine):
+def word2vec_model(config,combine):
 
     model = Word2Vec(size=config.vocabulary_dim,min_count=15,window=config.window_size,workers=config.cpu_count, iter=config.n_iterations,sorted_vocab=True)
     model.build_vocab(combine) #建立词典，必须步骤，不然会报错
@@ -73,7 +73,7 @@ def Word2Vec_Model(config,combine):
     return n_symbols, embedding_weights, combined
 
 
-def W2v_CNN_LSTM_Model(n_symbols,embedding_weights,config):
+def w2v_cnn_lstm_model(n_symbols,embedding_weights,config):
 
     # embedding layer
     model = Sequential()

@@ -23,11 +23,7 @@ imdb 数据集的情感分类的神经网络
     
     * 安装所需类库
     
-            pip install TensorFlow
-            pip install Keras
-            pip install numpy
-            pip install gensim
-            pip install sklearn
+           pip install -r requirements.txt
 
 6. 在虚拟环境中可以进行运行脚本等操作  
 
@@ -42,6 +38,11 @@ imdb 数据集的情感分类的神经网络
 P.S. 代码中涉及从外网下载数据，需要开翻墙VPN
 
 PPS. 预测模块还没有调试完毕，应该无法执行
+
+
+### 数据来源
+[下载aclImdb_v1.tar](http://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz)
+
 
 
 ### 各模块及函数
@@ -75,7 +76,7 @@ PPS. 预测模块还没有调试完毕，应该无法执行
    
         
 
-### 输入输出文档
+###输入输出文档
 1. 系统会自动从网站上下载数据，下载解压完成后会有以下文档
 
     * aclImdb_v1.tar
@@ -93,3 +94,5 @@ PPS. 预测模块还没有调试完毕，应该无法执行
      * x.npy
      * y.npy
      * Word2vec_model.pkl
+     
+     

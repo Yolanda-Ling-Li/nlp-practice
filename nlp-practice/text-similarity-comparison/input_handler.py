@@ -6,6 +6,7 @@ import numpy as np
 import random
 import MeCab
 import math
+import json
 import gc
 import os
 import re
@@ -30,6 +31,7 @@ def data_input(input_dir):
         the_text = []
         with open(fi, encoding='utf8') as file_input:
             the_document = ("".join(file_input.readlines())).replace("\n", "")
+            the_document = the_document.replace("\n\r", "")
             the_text += the_document.split('。')
         all_texts += [the_text[:-1]]
     return all_texts
@@ -200,7 +202,12 @@ def train_word2vec(combine, vocab_dim, min_count, window_size, n_iterations, dat
     embedding_weights = np.zeros((n_symbols, vocab_dim))  #索引为0的词语，词向量全为0
     for word, index in index_dict.items():  #从索引为1的词语开始，对每个词语对应其词向量
         embedding_weights[index, :] = word_vectors[word]
-    return n_symbols, embedding_weights, combined, index_dict
+
+    f = open(os.path.join(model_dir, "w2index.txt"), 'w')   #save index_dict
+    w2index = json.dumps(index_dict)
+    f.write(str(w2index))
+    f.close()
+    return n_symbols, embedding_weights, combined
 
 
 def create_train_dev_set(documents_pair, is_similar, max_len, validation_split_ratio):

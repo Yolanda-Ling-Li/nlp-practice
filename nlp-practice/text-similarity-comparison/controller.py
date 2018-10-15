@@ -1,8 +1,7 @@
 from model import SiameseBiLSTM
-from input_handler import data_load, train_word2vec, create_test_data, data_predict
+from input_handler import data_load, train_word2vec
 from config import siamese_config
 from keras.models import load_model
-from operator import itemgetter
 
 
 class ConfiGuration(object):
@@ -43,7 +42,7 @@ documents1, documents2, is_similar = data_load(config.data_dir)
 
 
 print("Creating word embedding meta data for word embeddin...")
-vocab_size, embedding_matrix, combine, index_dict = train_word2vec(
+vocab_size, embedding_matrix, combine = train_word2vec(
 	documents1 + documents2, config.vocab_dim,
 	config.min_count, config.window_size,
 	config.n_iterations, config.data_dir)
@@ -89,19 +88,4 @@ print("Embedding_cnn_lstm_model_model:the test data score is %f" % score)
 print("Embedding_cnn_lstm_model_model:the test data accuracy is %f" % acc)
 
 
-########################
-###### Predicting #########
-########################
 
-
-print("Predict documents through model SiameseBiLSTM...")
-predict_documents1, predict_documents2 = data_predict(config.data_dir)
-predict_document_pairs = [(x1, x2) for x1, x2 in zip(predict_documents1, predict_documents2)]
-predict_data_x1, predict_data_x2, leaks_predict = create_test_data(index_dict, predict_document_pairs, config.max_len)
-
-preds = list(model.predict([predict_data_x1, predict_data_x2, leaks_predict], verbose=1).ravel())
-results = [(c, "".join(a), "".join(b)) for (a, b), c in zip(predict_document_pairs, preds)]
-results.sort(key=itemgetter(0), reverse=True)
-
-for result in results:
-    print(str(result))

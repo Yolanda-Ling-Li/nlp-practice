@@ -53,10 +53,6 @@
  
 2. 解压数据，将文件夹命名为thedata
 
-3. 运行input.py，将所需的数据转存到./data/input下
-
-       python input.py
-
 
 ### 参考:
 

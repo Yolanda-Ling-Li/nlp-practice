@@ -4,6 +4,7 @@ from gensim.corpora.dictionary import Dictionary
 from random import choice
 import numpy as np
 import random
+import shutil
 import MeCab
 import math
 import json
@@ -12,9 +13,34 @@ import os
 import re
 
 
+def data_initialization():
+    """
+       Copy useful data into folder.(./data/input)
+       Returns:
+        data_ready(int): label if data ready(1 if ready else 0)
+    """
+    thedata_dir = os.path.abspath(os.path.join(os.path.curdir, "thedata"))
+    input_dir = os.path.abspath(os.path.join(os.path.curdir, "data\\input"))
+    if not os.path.exists(thedata_dir):
+        print("###!!Wrong: thedata folder is not detected!###")
+        return 0
+    if not os.path.exists(input_dir):
+        os.makedirs(input_dir)
+
+    one_path = os.path.join(thedata_dir, "txt\\gaigo_txt")
+    for f in os.listdir(one_path):
+        shutil.copyfile(one_path + "\\" + f, input_dir + "\\" + f)
+
+    two_path = os.path.join(thedata_dir, "txt\\internet_txt")
+    for f in os.listdir(two_path):
+        shutil.copyfile(two_path + "\\" + f, input_dir + "\\" + f)
+
+    return 1
+
+
 def data_input(input_dir):
     """
-    load document from files and make sentence segmentation
+    Load document from files and make sentence segmentation
     Args:
         input_dir (path): relative path to the data folder
     Returns:
@@ -175,7 +201,7 @@ def create_dictionaries(model=None, combine=None):
         combined = parse_dataset(w2indx=w2indx, the_documents=combine)  #每个句子所含词语对应的词语索引
         return w2indx, w2vec, combined
     else:
-        print('No data provided...')
+        print('###!!Wrong:No data provided!###')
 
 
 def train_word2vec(combine, vocab_dim, min_count, window_size, n_iterations, data_dir):

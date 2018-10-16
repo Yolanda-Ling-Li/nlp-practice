@@ -28,7 +28,7 @@ class SiameseBiLSTM:
 
     def train_model(self, documents_pair, is_similar, embedding_meta_data, data_dir):
         """
-        Train Siamese network to find similarity between sentences in `documents_pair`
+        Train Siamese network to find similarity between documents in `documents_pair`
             Steps Involved:
                 1. Pass the each from documents_pairs  to bidirectional LSTM encoder.
                 2. Merge the vectors from LSTM encodes and passed to dense layer.

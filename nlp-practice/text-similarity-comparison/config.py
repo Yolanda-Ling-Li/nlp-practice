@@ -51,4 +51,3 @@ siamese_config = {
 	'N_ITERATIONS': N_ITERATIONS,
 	'DATA_DIR': DATA_DIR,
 }
-

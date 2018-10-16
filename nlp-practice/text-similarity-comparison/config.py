@@ -1,5 +1,22 @@
 import os
 
+
+class Config(object):
+	DEBUG = False
+	HOST = '0.0.0.0'
+	PORT = '5500'
+	SECRET_KEY = 'redsfsfsfsfis'
+	NLP_MODEL_FILE = "data/model/Model.hdf5"
+
+
+class Development(Config):
+	DEBUG = True
+
+
+class Production(Config):
+	DEBUG = False
+
+
 VALIDATION_SPLIT = 0.2
 RATE_DROP_LSTM = 0.17
 RATE_DROP_DENSE = 0.25
@@ -34,3 +51,4 @@ siamese_config = {
 	'N_ITERATIONS': N_ITERATIONS,
 	'DATA_DIR': DATA_DIR,
 }
+

@@ -5,6 +5,7 @@ import uuid
 import json
 import os
 import base64
+import requests
 
 
 class ConfiGuration(object):
@@ -20,6 +21,7 @@ now_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 upload_path = os.path.join(now_path, "data//temp")
 if os.path.exists(upload_path) is False:
     os.makedirs(upload_path)
+
 
 
 def show_similar_score(graph, nlp_model):
@@ -62,5 +64,18 @@ def show_similar_score(graph, nlp_model):
     with graph.as_default():
         preds = nlp_model.predict([predict_data_x1, predict_data_x2, leaks_predict], verbose=1).ravel()
     preds_score = str(round(preds[0] * 100, 2))
+    preds_result = {'record_id': record_id, 'score': preds_score}
+    send_status_code = send_score(preds_result)
+    if send_status_code != 200:
+        preds_result['send_res']='Fail'
+    return preds_result
 
-    return {'record_id': record_id, 'score': preds_score}
+def send_score(preds_result):
+    send_url = 'http://172.29.226.64:8080/api/score/receive'
+    req = requests.post(url=send_url,data=preds_result)
+    return req.status_code
+
+
+if __name__ == "__main__":
+    res = send_score({'id':1,'score':20})
+

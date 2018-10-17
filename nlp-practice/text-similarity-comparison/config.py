@@ -6,7 +6,7 @@ class Config(object):
 	HOST = '0.0.0.0'
 	PORT = '5500'
 	SECRET_KEY = 'redsfsfsfsfis'
-	NLP_MODEL_FILE = "data/model/Model.hdf5"
+	SIAMESE_MODEL_FILE = "data/model/Model.hdf5"
 
 
 class Development(Config):

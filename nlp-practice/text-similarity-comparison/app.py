@@ -12,21 +12,21 @@ app = Flask(__name__, static_folder='static')  #创建flask对象
 env = Environments(app)  #配置
 env.from_object('config')
 graph = None
-nlp_model = None
+siamese_model = None
 
 
 def load_siamese_model():
     """Load the trained model."""
     global graph
     graph = tf.get_default_graph()  #获得默认图
-    global nlp_model
-    nlp_model = load_model(app.config['NLP_MODEL_FILE'])
+    global siamese_model
+    siamese_model = load_model(app.config['SIAMESE_MODEL_FILE'])
 
 
 @app.route("/eval", methods=['POST'])  #限制url请求方式，post参数获取是通过request.form['传进来的参数']取到
 def predict_result():
     """Get the articles and its similar degree."""
-    score = show_similar_score(graph, nlp_model)
+    score = show_similar_score(graph, siamese_model)
     return json.dumps(score)  #将dict类型的数据转成str
 
 

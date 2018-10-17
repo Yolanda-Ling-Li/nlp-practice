@@ -148,7 +148,7 @@ def data_predict(data_dir):
         documents1(list): list of word list of original document
         documents2(list): list of word list of control group document
     """
-    # input_dir = os.path.abspath(os.path.join(data_dir, "predict"))
+#   input_dir = os.path.abspath(os.path.join(data_dir, "predict"))
     all_texts = data_input(data_dir)
 
     for document in all_texts:

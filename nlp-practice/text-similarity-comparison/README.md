@@ -80,7 +80,7 @@
 
 5. 在article_content与record_content中输入待识别文本的base64编码，在content_type中输入txt，设置record_id，然后点击Send发送数据
 
-6. 获得返回结果，形如 {"record_id":"1","score":"99"}
+6. 获得返回结果，同时结果会被发送到 http://172.29.226.64:8080/api/score/receive
 
 
 ### 参考:

@@ -16,6 +16,12 @@ config.max_len = siamese_config['MAX_DOCUMENT_LENGTH']
 config.data_dir = siamese_config['DATA_DIR']
 
 
+now_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+upload_path = os.path.join(now_path, "data//temp")
+if os.path.exists(upload_path) is False:
+    os.makedirs(upload_path)
+
+
 def show_similar_score(graph, nlp_model):
     """
     Predict the similar degree between two articles.
@@ -24,14 +30,15 @@ def show_similar_score(graph, nlp_model):
     :return:
         {'similar_score': preds_score}(dict): preds_score(str) is the he similar degree between two articles
     """
-    now_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    upload_path = os.path.join(now_path, "data//temp")
-    if os.path.exists(upload_path) is False:
-        os.makedirs(upload_path)
     w2index_file = os.path.join(config.data_dir, "model//w2index.txt")
+    file_1 = request.form['article_content']
+    file_2 = request.form['record_content']
+    content_type = request.form['content_type']
+    record_id = request.form['record_id']
 
-    file_1 = request.form['filename1']
-    file_2 = request.form['filename2']
+    if content_type != 'txt':
+        return 'Only support txt text input NOW!'
+
     decode_file_1 = base64.b64decode(file_1).decode('utf-8')
     decode_file_2 = base64.b64decode(file_2).decode('utf-8')
     file_1_name = 'predict1.txt'
@@ -54,6 +61,6 @@ def show_similar_score(graph, nlp_model):
                                                                        config.max_len)
     with graph.as_default():
         preds = nlp_model.predict([predict_data_x1, predict_data_x2, leaks_predict], verbose=1).ravel()
-    preds_score = str(round(preds[0] * 100, 2))+'%'
+    preds_score = str(round(preds[0] * 100, 2))
 
-    return {'similar_score': preds_score}
+    return {'record_id': record_id, 'score': preds_score}

@@ -27,6 +27,7 @@ def load_siamese_model():
 def predict_result():
     """Get the articles and its similar degree."""
     score = show_similar_score(graph, siamese_model)
+    print(json.dumps(score))
     return json.dumps(score)  #将dict类型的数据转成str
 
 

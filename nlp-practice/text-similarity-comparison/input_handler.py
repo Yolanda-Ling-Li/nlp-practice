@@ -20,20 +20,20 @@ def data_initialization():
         data_ready(int): label if data ready(1 if ready else 0)
     """
     thedata_dir = os.path.abspath(os.path.join(os.path.curdir, "thedata"))
-    input_dir = os.path.abspath(os.path.join(os.path.curdir, "data\\input"))
+    input_dir = os.path.abspath(os.path.join(os.path.curdir, "data//input"))
     if not os.path.exists(thedata_dir):
         print("###!!Wrong: thedata folder is not detected!###")
         return 0
     if not os.path.exists(input_dir):
         os.makedirs(input_dir)
 
-    one_path = os.path.join(thedata_dir, "txt\\gaigo_txt")
+    one_path = os.path.join(thedata_dir, "txt//gaigo_txt")
     for f in os.listdir(one_path):
-        shutil.copyfile(one_path + "\\" + f, input_dir + "\\" + f)
+        shutil.copyfile(one_path + "//" + f, input_dir + "//" + f)
 
-    two_path = os.path.join(thedata_dir, "txt\\internet_txt")
+    two_path = os.path.join(thedata_dir, "txt//internet_txt")
     for f in os.listdir(two_path):
-        shutil.copyfile(two_path + "\\" + f, input_dir + "\\" + f)
+        shutil.copyfile(two_path + "//" + f, input_dir + "//" + f)
 
     return 1
 
@@ -50,7 +50,7 @@ def data_input(input_dir):
     if not os.path.exists(input_dir):
         os.makedirs(input_dir)
     for f in os.listdir(input_dir):
-        file_list += [input_dir + '\\' + f]
+        file_list += [input_dir + '//' + f]
 
     all_texts = []
     for fi in file_list:

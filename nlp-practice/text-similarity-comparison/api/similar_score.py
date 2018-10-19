@@ -1,7 +1,6 @@
 from input_handler import create_test_data, data_predict
 from config import siamese_config
 from flask import request
-import uuid
 import json
 import os
 import base64
@@ -18,7 +17,7 @@ config.data_dir = siamese_config['DATA_DIR']
 
 
 now_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-upload_path = os.path.join(now_path, "data//temp")
+upload_path = os.path.join(now_path, "data\\temp")
 if os.path.exists(upload_path) is False:
     os.makedirs(upload_path)
 
@@ -27,26 +26,30 @@ if os.path.exists(upload_path) is False:
 def show_similar_score(graph, siamese_model):
     """
     Predict the similar degree between two articles.
-    :param graph: fundamental graph
-    :param siamese_model: the trained siamese model
-    :return:
+    Args:
+        graph(graph): fundamental graph
+        siamese_model: the trained siamese model
+    Return:
         {'similar_score': preds_score}(dict): preds_score(str) is the he similar degree between two articles
     """
     w2index_file = os.path.join(config.data_dir, "model//w2index.txt")
-    file_1 = request.form['article_content']
-    file_2 = request.form['record_content']
-    content_type = request.form['content_type']
-    record_id = request.form['record_id']
+    data = json.loads(request.get_data())
+    file_1 = data['article_content']
+    file_2 = data['record_content']
+    content_type = data['content_type']
+    record_id = data['record_id']
+    article_id = data['article_id']
 
     if content_type != 'txt':
         return 'Only support txt text input NOW!'
 
     decode_file_1 = base64.b64decode(file_1).decode('utf-8')
     decode_file_2 = base64.b64decode(file_2).decode('utf-8')
-    file_1_name = 'predict1.txt'
-    file_2_name = 'predict2.txt'
-    save_data_dir = os.path.join(upload_path, str(uuid.uuid1()))
-    os.makedirs(save_data_dir)
+    file_1_name = 'article_' + article_id + '.txt'
+    file_2_name = 'record_' + record_id + '.txt'
+    save_data_dir = os.path.join(upload_path, 'txt//'+article_id)
+    if not os.path.exists(save_data_dir):
+        os.makedirs(save_data_dir)
     savefile_1 = os.path.join(save_data_dir, file_1_name)
     with open(savefile_1, 'w+', encoding='utf-8') as f:
         f.write(decode_file_1)
@@ -72,7 +75,13 @@ def show_similar_score(graph, siamese_model):
 
 
 def send_score(preds_result):
-    """Send post request."""
+    """
+    Send post request.
+    Args:
+         preds_result(dict): cotent to be sent
+    Return:
+        req.status_code(int): status code of requestion
+    """
     send_url = 'http://172.29.226.64:8080/api/score/receive'
     req = requests.post(url=send_url, data=str(preds_result))
     return req.status_code

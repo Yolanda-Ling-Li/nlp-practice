@@ -3,7 +3,7 @@ import os
 
 class Config(object):
     DEBUG = False
-    HOST = '127.0.0.1'  #0.0.0.0则非本机也可以访问
+    HOST = '127.0.0.1'  #0.0.0.0 can be accessed either locally or locally.
     PORT = '5500'
     SECRET_KEY = 'redsfsfsfsfis'
     SIAMESE_MODEL_FILE = os.path.abspath(os.path.join(os.path.curdir, "data//model//Model.hdf5"))
@@ -24,13 +24,13 @@ NUMBER_LSTM = 50
 NUMBER_DENSE_UNITS = 50
 ACTIVATION_FUNCTION = 'relu'
 
-MIN_FREQUENT = 5  #最低词频
-MAX_DOCUMENT_LENGTH = 400   #文件长
-VOCABULARY_DIM = 256    #词向量维数
+MIN_FREQUENT = 5
+MAX_DOCUMENT_LENGTH = 400
+VOCABULARY_DIM = 256
 BATCH_SIZE = 72
 NUM_EPOCH = 200
-WINDOW_SIZE = 8  # 窗口大小
-N_ITERATIONS = 5  # 迭代次数，默认为5 #定义词向量模型
+WINDOW_SIZE = 8
+N_ITERATIONS = 5
 DATA_DIR = os.path.abspath(os.path.join(os.path.curdir, "data"))
 
 

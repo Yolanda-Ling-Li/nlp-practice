@@ -112,6 +112,6 @@ def main():
         evaluate(best_model_path, test_data, test_labels)
 
 
-# 当.py文件被直接运行时将被运行，当.py文件以模块形式被导入时不被运行。
+# When the.Py file is run directly, it will be run, and the.Py file will not be run when it is imported in module form.
 if __name__ == "__main__":
     main()

@@ -102,7 +102,8 @@ class SiameseBiLSTM:
         model_checkpoint = ModelCheckpoint(
             os.path.join(model_dir, "Model.hdf5"),  monitor='val_loss', verbose=1, save_best_only=True,
             save_weights_only=False)
-        tensorboard = TensorBoard(log_dir=logs_dir)  # 存储loss，acc曲线文件的路径，可以用命令行+6006打开
+        tensorboard = TensorBoard(log_dir=logs_dir)
+        # The path to store loss, ACC curve files can be opened with command line +6006.
 
         model.fit([train_data_x1, train_data_x2, leaks_train], train_labels, epochs=self.num_epoch,
                   batch_size=self.batch_size, validation_split=self.validation_split_ratio, shuffle=True,
@@ -141,7 +142,8 @@ class SiameseBiLSTM:
         model_checkpoint = ModelCheckpoint(
             os.path.join(model_path), monitor='val_loss', verbose=1, save_best_only=True,
             save_weights_only=False)
-        tensorboard = TensorBoard(log_dir=logs_path)  # 存储loss，acc曲线文件的路径，可以用命令行+6006打开
+        tensorboard = TensorBoard(log_dir=logs_path)
+        # The path to store loss, ACC curve files can be opened with command line +6006.
 
         model.fit([train_data_x1, train_data_x2, leaks_train], train_labels,
                   validation_data=([val_data_x1, val_data_x2, leaks_val], val_labels),

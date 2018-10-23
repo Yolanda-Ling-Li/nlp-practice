@@ -162,7 +162,7 @@ def data_predict(data_dir):
 
 def parse_dataset(w2indx, the_documents):  
     """
-    Map words into index
+    Map words of documents into index
     Args:
         w2indx(dict): dict containing words and their respective index
         the_documents(list): list of word list of document
@@ -195,10 +195,10 @@ def create_dictionaries(model=None, combine=None):
     """
     if (combine is not None) and (model is not None):
         gensim_dict = Dictionary()
-        gensim_dict.doc2bow(model.wv.vocab.keys(),allow_update=True)  #把该查询文档（词集）更改为（词袋模型）即：字典格式，key是单词，value是该单词在该文档中出现次数。
-        w2indx = {v: k+1 for k, v in gensim_dict.items()}  #所有的词语的索引
-        w2vec = {word: model[word] for word in w2indx.keys()}  #所有词语的词向量
-        combined = parse_dataset(w2indx=w2indx, the_documents=combine)  #每个句子所含词语对应的词语索引
+        gensim_dict.doc2bow(model.wv.vocab.keys(),allow_update=True)
+        w2indx = {v: k+1 for k, v in gensim_dict.items()}
+        w2vec = {word: model[word] for word in w2indx.keys()}
+        combined = parse_dataset(w2indx=w2indx, the_documents=combine)
         return w2indx, w2vec, combined
     else:
         print('###!!Wrong:No data provided!###')
@@ -220,13 +220,14 @@ def train_word2vec(combine, vocab_dim, min_count, window_size, n_iterations, dat
         os.makedirs(model_dir)
 
     model = Word2Vec(size=vocab_dim, min_count=min_count, window=window_size, iter=n_iterations, sorted_vocab=True)
-    model.build_vocab(combine)  #建立词典，必须步骤，不然会报错
-    model.train(combine, total_examples=model.corpus_count, epochs=model.iter)  #训练词向量模型
-    model.save(os.path.join(model_dir,  "Word2vec_model.pkl"))  #保存词向量模型
+    model.build_vocab(combine)  # To build a dictionary. You must take this steps, or you will get an error.
+    model.train(combine, total_examples=model.corpus_count, epochs=model.iter)
+    model.save(os.path.join(model_dir,  "Word2vec_model.pkl"))
     index_dict, word_vectors, combined = create_dictionaries(model=model, combine=combine)
-    n_symbols = len(index_dict) + 1  #所有单词的索引数，频数小于10的词语索引为0，所以加1
-    embedding_weights = np.zeros((n_symbols, vocab_dim))  #索引为0的词语，词向量全为0
-    for word, index in index_dict.items():  #从索引为1的词语开始，对每个词语对应其词向量
+    n_symbols = len(index_dict) + 1
+    # The number of index of all words. The index of word which frequents are less than MIN_FREQUENT is 0, and so add 1
+    embedding_weights = np.zeros((n_symbols, vocab_dim))  # The vector of the word which index is 0 is whole 0.
+    for word, index in index_dict.items():
         embedding_weights[index, :] = word_vectors[word]
 
     f = open(os.path.join(model_dir, "w2index.txt"), 'w')   #save index_dict
@@ -263,13 +264,12 @@ def create_train_dev_set(documents_pair, is_similar, max_len, validation_split_r
     leaks = [[len(set(x1)), len(set(x2)), len(set(x1).intersection(x2))]
              for x1, x2 in zip(documents1, documents2)]
 
-    # maxlen设置最大的序列长度，长于该长度的序列将会截短，短于该长度的序列将会填充
     train_padded_data_1 = pad_sequences(documents1, maxlen=max_len)
     train_padded_data_2 = pad_sequences(documents1, maxlen=max_len)
     train_labels = np.array(is_similar)
     leaks = np.array(leaks)
 
-    shuffle_indices = np.random.permutation(np.arange(len(train_labels)))   #打乱顺序
+    shuffle_indices = np.random.permutation(np.arange(len(train_labels)))  # reshuffing
     train_data_1_shuffled = train_padded_data_1[shuffle_indices]
     train_data_2_shuffled = train_padded_data_2[shuffle_indices]
     train_labels_shuffled = train_labels[shuffle_indices]
@@ -277,11 +277,11 @@ def create_train_dev_set(documents_pair, is_similar, max_len, validation_split_r
 
     dev_idx = max(1, int(len(train_labels_shuffled) * validation_split_ratio))
 
-    del train_padded_data_1  #释放内存
+    del train_padded_data_1  # Release memory
     del train_padded_data_2
     gc.collect()
 
-    train_data_1, val_data_1 = train_data_1_shuffled[:-dev_idx], train_data_1_shuffled[-dev_idx:]   #划分训练集验证集
+    train_data_1, val_data_1 = train_data_1_shuffled[:-dev_idx], train_data_1_shuffled[-dev_idx:]  #Divide dataset
     train_data_2, val_data_2 = train_data_2_shuffled[:-dev_idx], train_data_2_shuffled[-dev_idx:]
     labels_train, labels_val = train_labels_shuffled[:-dev_idx], train_labels_shuffled[-dev_idx:]
     leaks_train, leaks_val = leaks_shuffled[:-dev_idx], leaks_shuffled[-dev_idx:]

@@ -22,11 +22,16 @@
 
 ###Mecab分词系统安装
 
-1. Linux系统下无法使用pip安装Mecab时，使用apt-get安装
+1. Linux系统下无法使用pip安装Mecab时，使用如下方法安装
 
-       sudo apt-get install libmecab-dev
-       sudo apt-get install mecab mecab-ipadic-utf8
-       pip install mecab-python3
+    * Ubuntu: [mecab-python3 · PyPI](https://pypi.org/project/mecab-python3/)
+    
+    * Centos: [MeCabをPython3.5から使う](https://qiita.com/cvusk/items/2f076d775d095d3a183a)
+   
+        注1：如果gcc报错的话，执行`sudo yum install python36u-devel`
+        
+        注2：无需下载mecab-ipadic-2.7.0-20070801，在/opt/mecab/mecab-ipadic下配置就好
+ 
 
 2. Windows系统下无法使用pip安装Mecab时，从网站下载安装包，然后根据安装教程安装Mecab
  

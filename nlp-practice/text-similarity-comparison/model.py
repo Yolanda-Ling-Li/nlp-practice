@@ -61,7 +61,7 @@ class SiameseBiLSTM:
 
         # Creating LSTM Encoder
         lstm_layer = Bidirectional(
-            LSTM(self.number_lstm_units, dropout=self.rate_drop_lstm, recurrent_dropout=self.rate_drop_lstm))    #双向预测
+            LSTM(self.number_lstm_units, dropout=self.rate_drop_lstm, recurrent_dropout=self.rate_drop_lstm))
 
         # Creating LSTM Encoder layer for First Sentence
         document_1_input = Input(shape=(self.max_document_length,), dtype='int32')

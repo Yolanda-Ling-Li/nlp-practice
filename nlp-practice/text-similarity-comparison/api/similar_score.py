@@ -17,7 +17,7 @@ config.data_dir = siamese_config['DATA_DIR']
 
 
 now_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-upload_path = os.path.join(now_path, "data\\temp")
+upload_path = os.path.join(now_path, "data//temp")
 if os.path.exists(upload_path) is False:
     os.makedirs(upload_path)
 

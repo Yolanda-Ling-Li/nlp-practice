@@ -28,8 +28,8 @@ def load_siamese_model():
 @app.route("/eval", methods=['POST'])
 def predict_result():
     """Get the articles and its similar degree."""
-    score = show_similar_score(graph, siamese_model)
-    print(json.dumps(score))
+    score, the_log = show_similar_score(graph, siamese_model)
+    print(json.dumps(the_log))
     return json.dumps(score)  #Convert dict type data to str
 
 

@@ -30,7 +30,8 @@ def show_similar_score(graph, siamese_model):
         graph(graph): fundamental graph
         siamese_model: the trained siamese model
     Return:
-        {'similar_score': preds_score}(dict): preds_score(str) is the he similar degree between two articles
+        preds_result(dict): preds_score(str) is the he similar degree between two articles
+        the_log(dict): log of this predict
     """
     w2index_file = os.path.join(config.data_dir, "model//w2index.txt")
     data = json.loads(request.get_data())
@@ -45,9 +46,11 @@ def show_similar_score(graph, siamese_model):
 
     decode_file_1 = base64.b64decode(file_1).decode('utf-8')
     decode_file_2 = base64.b64decode(file_2).decode('utf-8')
+    print("file1:" + decode_file_1[0:50])
+    print("file2:" + decode_file_2[0:50])
     file_1_name = 'article_' + article_id + '.txt'
     file_2_name = 'record_' + record_id + '.txt'
-    save_data_dir = os.path.join(upload_path, 'txt//'+article_id)
+    save_data_dir = os.path.join(upload_path, 'txt//'+ article_id + '// ' + record_id)
     if not os.path.exists(save_data_dir):
         os.makedirs(save_data_dir)
     savefile_1 = os.path.join(save_data_dir, file_1_name)
@@ -67,11 +70,12 @@ def show_similar_score(graph, siamese_model):
     with graph.as_default():
         preds = siamese_model.predict([predict_data_x1, predict_data_x2, leaks_predict], verbose=1).ravel()
     preds_score = str(round(preds[0] * 100, 2))
+    the_log = {'article_id': article_id, 'record_id': record_id, 'score': preds_score}
     preds_result = {'record_id': record_id, 'score': preds_score}
     send_status_code = send_score(preds_result)
     if send_status_code != 200:
         preds_result['send_res'] = 'Fail'
-    return preds_result
+    return preds_result, the_log
 
 
 def send_score(preds_result):
@@ -82,7 +86,7 @@ def send_score(preds_result):
     Return:
         req.status_code(int): status code of requestion
     """
-    send_url = 'http://172.29.226.64:8080/api/score/receive'
+    send_url = 'http://127.0.0.1:8080/api/score/receive'
     req = requests.post(url=send_url, data=str(preds_result))
     return req.status_code
 

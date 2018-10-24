@@ -114,7 +114,7 @@ class SiameseBiLSTM:
         return os.path.join(model_dir, 'Model.hdf5'), test_data, test_labels
 
 
-    def update_model(self, data_dir, new_documents_pair, is_similar):
+    def update_model(self, new_documents_pair, is_similar, data_dir):
         """
         Update trained siamese model for given new sentences pairs 
             Steps Involved:

@@ -7,6 +7,7 @@ class Config(object):
     PORT = '5500'
     SECRET_KEY = 'redsfsfsfsfis'
     SIAMESE_MODEL_FILE = os.path.abspath(os.path.join(os.path.curdir, "data//model//Model.hdf5"))
+    REQUIRE_URL = "http://127.0.0.1:8080/api/score/receive"
 
 
 class Development(Config):

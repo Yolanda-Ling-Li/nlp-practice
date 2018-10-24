@@ -23,12 +23,13 @@ if os.path.exists(upload_path) is False:
 
 
 
-def show_similar_score(graph, siamese_model):
+def show_similar_score(graph, siamese_model, send_url):
     """
     Predict the similar degree between two articles.
     Args:
         graph(graph): fundamental graph
         siamese_model: the trained siamese model
+        send_url(str): url of request address
     Return:
         preds_result(dict): preds_score(str) is the he similar degree between two articles
         the_log(dict): log of this predict
@@ -50,7 +51,7 @@ def show_similar_score(graph, siamese_model):
     print("file2:" + decode_file_2[0:50])
     file_1_name = 'article_' + article_id + '.txt'
     file_2_name = 'record_' + record_id + '.txt'
-    save_data_dir = os.path.join(upload_path, 'txt//'+ article_id + '// ' + record_id)
+    save_data_dir = os.path.join(upload_path, 'txt//'+ article_id + '//' + record_id)
     if not os.path.exists(save_data_dir):
         os.makedirs(save_data_dir)
     savefile_1 = os.path.join(save_data_dir, file_1_name)
@@ -72,21 +73,21 @@ def show_similar_score(graph, siamese_model):
     preds_score = str(round(preds[0] * 100, 2))
     the_log = {'article_id': article_id, 'record_id': record_id, 'score': preds_score}
     preds_result = {'record_id': record_id, 'score': preds_score}
-    send_status_code = send_score(preds_result)
+    send_status_code = send_score(preds_result, send_url)
     if send_status_code != 200:
         preds_result['send_res'] = 'Fail'
     return preds_result, the_log
 
 
-def send_score(preds_result):
+def send_score(preds_result, send_url):
     """
     Send post request.
     Args:
          preds_result(dict): cotent to be sent
+         send_url(str): url of request address
     Return:
         req.status_code(int): status code of requestion
     """
-    send_url = 'http://127.0.0.1:8080/api/score/receive'
     req = requests.post(url=send_url, data=str(preds_result))
     return req.status_code
 

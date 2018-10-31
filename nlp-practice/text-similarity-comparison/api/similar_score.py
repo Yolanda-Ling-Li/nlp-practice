@@ -34,7 +34,7 @@ def show_similar_score(graph, siamese_model, send_url):
         preds_result(dict): preds_score(str) is the he similar degree between two articles
         the_log(dict): log of this predict
     """
-    w2index_file = os.path.join(config.data_dir, "model//w2index.txt")
+    w2index_file = os.path.join(config.data_dir, "model//txt//w2index.txt")
     data = json.loads(request.get_data())
     file_1 = data['article_content']
     file_2 = data['record_content']
@@ -73,9 +73,9 @@ def show_similar_score(graph, siamese_model, send_url):
     preds_score = str(round(preds[0] * 100, 2))
     the_log = {'article_id': article_id, 'record_id': record_id, 'score': preds_score}
     preds_result = {'record_id': record_id, 'score': preds_score}
-    send_status_code = send_score(preds_result, send_url)
-    if send_status_code != 200:
-        preds_result['send_res'] = 'Fail'
+    # send_status_code = send_score(preds_result, send_url)
+    # if send_status_code != 200:
+    #     preds_result['send_res'] = 'Fail'
     return preds_result, the_log
 
 

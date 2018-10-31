@@ -91,8 +91,8 @@ class SiameseBiLSTM:
         model.compile(loss='binary_crossentropy', optimizer='nadam', metrics=['acc'])
 
 
-        model_dir = os.path.abspath(os.path.join(data_dir, "model"))
-        logs_dir = os.path.abspath(os.path.join(data_dir, "logs"))
+        model_dir = os.path.abspath(os.path.join(data_dir, "model//txt"))
+        logs_dir = os.path.abspath(os.path.join(data_dir, "logs//txt"))
         if not os.path.exists(model_dir):
             os.makedirs(model_dir)
         if not os.path.exists(logs_dir):
@@ -130,8 +130,8 @@ class SiameseBiLSTM:
         Returns:
             return (model_path):  path of best model
         """
-        model_path = os.path.abspath(os.path.join(data_dir, "model//Model.hdf5"))
-        logs_path = os.path.abspath(os.path.join(data_dir, "logs"))
+        model_path = os.path.abspath(os.path.join(data_dir, "model//txt//Model.hdf5"))
+        logs_path = os.path.abspath(os.path.join(data_dir, "logs//txt"))
         train_data_x1, train_data_x2, train_labels, leaks_train, \
         val_data_x1, val_data_x2, val_labels, leaks_val = create_train_dev_set(new_documents_pair,
                                                                                is_similar, self.max_document_length,

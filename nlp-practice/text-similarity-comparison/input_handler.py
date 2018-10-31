@@ -20,7 +20,7 @@ def data_initialization():
         data_ready(int): label if data ready(1 if ready else 0)
     """
     thedata_dir = os.path.abspath(os.path.join(os.path.curdir, "thedata"))
-    input_dir = os.path.abspath(os.path.join(os.path.curdir, "data//input"))
+    input_dir = os.path.abspath(os.path.join(os.path.curdir, "data//input//txt"))
     if not os.path.exists(thedata_dir):
         print("###!!Wrong: thedata folder is not detected!###")
         return 0
@@ -115,7 +115,7 @@ def data_load(data_dir):
     documents1 = []
     documents2 = []
     is_similar = []
-    input_dir = os.path.abspath(os.path.join(data_dir, "input"))
+    input_dir = os.path.abspath(os.path.join(data_dir, "input//txt"))
     all_texts = data_input(input_dir)
 
     for document in all_texts:
@@ -215,7 +215,7 @@ def train_word2vec(combine, vocab_dim, min_count, window_size, n_iterations, dat
         embedding_weights(dict): dict with word_index and vector mapping
         combined(list):list of input features for train set or test set, which is built by word index
     """
-    model_dir = os.path.abspath(os.path.join(data_dir, "model"))
+    model_dir = os.path.abspath(os.path.join(data_dir, "model//txt"))
     if not os.path.exists(model_dir):
         os.makedirs(model_dir)
 

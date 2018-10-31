@@ -6,7 +6,7 @@ class Config(object):
     HOST = '127.0.0.1'  #0.0.0.0 can be accessed either locally or locally.
     PORT = '5500'
     SECRET_KEY = 'redsfsfsfsfis'
-    SIAMESE_MODEL_FILE = os.path.abspath(os.path.join(os.path.curdir, "data//model//Model.hdf5"))
+    SIAMESE_MODEL_FILE = os.path.abspath(os.path.join(os.path.curdir, "data//model//txt//Model.hdf5"))
     REQUIRE_URL = "http://127.0.0.1:8080/api/score/receive"
 
 
@@ -33,7 +33,6 @@ NUM_EPOCH = 200
 WINDOW_SIZE = 8
 N_ITERATIONS = 5
 DATA_DIR = os.path.abspath(os.path.join(os.path.curdir, "data"))
-
 
 siamese_config = {
     'MAX_DOCUMENT_LENGTH': MAX_DOCUMENT_LENGTH,

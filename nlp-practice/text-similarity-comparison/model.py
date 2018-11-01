@@ -98,7 +98,7 @@ class SiameseBiLSTM:
         if not os.path.exists(logs_dir):
             os.makedirs(logs_dir)
 
-        early_stopping = EarlyStopping(monitor='val_loss', patience=3)
+        early_stopping = EarlyStopping(monitor='val_loss', patience=5)
         model_checkpoint = ModelCheckpoint(
             os.path.join(model_dir, "Model.hdf5"),  monitor='val_loss', verbose=1, save_best_only=True,
             save_weights_only=False)

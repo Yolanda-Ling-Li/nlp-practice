@@ -8,7 +8,7 @@ class Config(object):
     SECRET_KEY = 'redsfsfsfsfis'
     SIAMESE_MODEL_FILE = os.path.abspath(os.path.join(os.path.curdir, "data//model//txt//Model.hdf5"))
     REQUIRE_URL = "http://127.0.0.1:8080/api/score/receive"
-
+    SIAMESE_MODEL_PIC_FILE = './data/model/pic/model_best_weights.hdf5'
 
 class Development(Config):
     DEBUG = True
@@ -29,7 +29,7 @@ MIN_FREQUENT = 5
 MAX_DOCUMENT_LENGTH = 400
 VOCABULARY_DIM = 256
 BATCH_SIZE = 72
-NUM_EPOCH = 200
+NUM_EPOCH = 2000
 WINDOW_SIZE = 8
 N_ITERATIONS = 5
 DATA_DIR = os.path.abspath(os.path.join(os.path.curdir, "data"))

@@ -7,7 +7,7 @@ It is a keras based implementation of deep siamese Bidirectional LSTM network to
 
 Below is the architecture description for the same.
 
-![arch_imag](images/arch_image.png)
+![arch_imag](data/arch_image.png)
 
 ## Usage
 

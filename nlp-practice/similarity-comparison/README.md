@@ -1,9 +1,9 @@
-## Text Similarity Using Siamese Deep Neural Network
+## Text/Photo Similarity Using Siamese Deep Neural
 
 
 Siamese neural network is a class of neural network architectures that contain two or more identical subnetworks. identical here means they have the same configuration with the same parameters and weights. Parameter updating is mirrored across both subnetworks.
 
-It is a keras based implementation of deep siamese Bidirectional LSTM network to capture phrase/sentence similarity using word embeddings.
+It is a keras based implementation of deep siamese Bidirectional LSTM network to capture phrase/sentence/photo similarity and return results to teleport.
 
 Below is the architecture description for the same.
 

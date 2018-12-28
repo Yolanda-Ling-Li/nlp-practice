@@ -1,93 +1,89 @@
-imdb 数据集的情感分类的神经网络
+Neural Network for Emotional Classification of IMDB Data Sets
 ---
-### 配置环境
+### Configuration Environment
 
-1. 安装python3.6.6
-2. 安装pycharm
-3. 安装virtualenv10.0.1
+1. Install python3.6.6
+2. Install pycharm
+3. Install virtualenv10.0.1
 
         pip install virtualenv
 
-4. 构造项目目录，为项目安装虚拟环境
+4. Construct the project directory to install the virtual environment for the project
 
         virtualenv venv --no-site-packages
 
-5. 启动虚拟环境，安装所需类库
-    * Linux或Mac启用虚拟环境
+5. Start the virtual environment and install the required libraries
+    * Start the virtual environment in Linux or Mac
     
             source venv/bin/activate
     
-    * Windows启用虚拟环境
+    * Start the virtual environment in Windows
     
             venv\Scripts\activate
     
-    * 安装所需类库
+6. Install the required libraries
     
-           pip install -r requirements.txt
+        pip install -r requirements.txt
 
-6. 在虚拟环境中可以进行运行脚本等操作  
+7. Operations such as running programs can be performed in a virtual environment  
 
         python train.py -m 1  
         #1--embedding+cnn+lstm  2--word2vec+cnn+lstm 
         #3--predict through model1  4--predict through model2
   
-7. 离开虚拟环境
+8. Close the virtual environment
 
         deactivate
 
-P.S. 代码中涉及从外网下载数据，需要开翻墙VPN
-
-PPS. 预测模块还没有调试完毕，应该无法执行
+PS. The prediction module has not been debugged yet and couldn't be executed
 
 
-### 数据来源
-[下载aclImdb_v1.tar](http://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz)
+### Data Sources
+[Download aclImdb_v1.tar](http://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz)
 
 
 
-### 各模块及函数
-1. 数据处理模块：dataprocessing.py
+### Modules and Functions
+1. Data processing module：dataprocessing.py
 
-        def rm_tags(text) #去标签
-        def read_files(filetype,data_dir) #读文件，生成标签array和文章list
-        def w2v_load_data(data_dir) #生成训练集验证集并返回
-        def embeding_load_data(max_len,vocabulary_size=2000) #筛去过多词语，截断过长句子，生成训练集验证集并返回
+        def rm_tags(text) #remove tags
+        def read_files(filetype,data_dir) #read files, generate tag arrays and article lists
+        def embeding_load_data(max_len,vocabulary_size=2000) #generate training set and verification set of model1
+        def w2v_load_data(data_dir) #generate training set and verification set of model2
         
-2. 训练模型模块：train.py
+2. Training model module：train.py
 
-        class Config() #所有参数
-        def train_embedding(config) #model1训练并生成对应h5py
-        def train_w2v(config) #model2训练并生成对应h5py
+        class Config() #parameter configuration
+        def train_embedding(config) #train model1 and save the best model
+        def train_w2v(config) #train model2 and save the best model
         
-3. 生成模型模块：model.py
+3. Generating model module：model.py
    
-        def Embedding_CNN_LSTM_Model(config) #生成模型1
-        def create_dictionaries(vocab_dim,max_len,model=None, combine=None):
-        #创建词语字典，并返回每个词语的索引，词向量，以及每个文本所对应的词语索引矩阵
-        Word2Vec_Model(config,combine)
-        #创建并训练Word2Vec，#创建词语字典，并返回词典大小，权重矩阵以及每个词语索引矩阵
-        def W2v_CNN_LSTM_Model(config) #生成模型2
+        def Embedding_CNN_LSTM_Model(config) #model1
+        def create_dictionaries(vocab_dim,max_len,model=None, combine=None):  #Create a dictionary of words
+        Word2Vec_Model(config,combine)  #Create a dictionary of words through Word2Vec
 
-4. 预测模块：predict.py （未调试完毕）
 
-        def predict_save(data_dir, x_predict, y_predict)  #存储模型
-        def predict_load(data_dir) #加载模型
-        def predict(config) #预测
+4. Predict module：predict.py （not debug yet）
+
+        def predict_save(data_dir, x_predict, y_predict)  #save model
+        def predict_load(data_dir) #load model
+        def predict(config) #predict
    
         
 
-###输入输出文档
-1. 系统会自动从网站上下载数据，下载解压完成后会有以下文档
+###Input and Output Documents
+1. The system will automatically download data from the website. After the download and decompression, the following documents will appear.
 
     * aclImdb_v1.tar
     * aclImdb
  
-2. 系统运行过程中会生成日志文件
+2. Log files are generated during system operation
  
      * logs
      * events.out.tfevents.1538191499.ai-1070
 
-3. 系统运行完后会存储模型和参数
+3. The model and parameters are stored after the system runs.
  
      * Model1.hdf5
      * Model2.hdf5

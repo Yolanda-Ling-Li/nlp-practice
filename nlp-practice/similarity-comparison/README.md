@@ -1,89 +1,91 @@
-## 基于连体深度神经网络的文本相似度测试模型
+## Text Similarity Using Siamese Deep Neural Network
 
 
-暹罗神经网络是一类**神经网络架构，包含两个或多个** **相同的** **子网**。 *相同*这里表示它们具有相同参数的相同配置和重量。 参数更新跨两个子网进行镜像。
+Siamese neural network is a class of neural network architectures that contain two or more identical subnetworks. identical here means they have the same configuration with the same parameters and weights. Parameter updating is mirrored across both subnetworks.
 
-它是基于keras的深暹罗双向LSTM网络实现，使用字嵌入来捕获短语/句子相似性。
+It is a keras based implementation of deep siamese Bidirectional LSTM network to capture phrase/sentence similarity using word embeddings.
 
-以下是相同的架构描述。
+Below is the architecture description for the same.
 
 ![rch_imag](images/arch_image.png)
 
-## 用法
+## Usage
 
-###训练数据准备
+###Training Data Preparation
 
-1. 从网站下载所需数据
+1. Download the required data from the website
 
-      [日本学习者的书面作文语料库](http://sakubun.jpn.org/)
+      [Written Composition Corpus of Japanese Learners](http://sakubun.jpn.org/)
  
-2. 解压数据，将文件夹命名为thedata
+2. Unzip the data and name the folder "thedata"
 
 
-###Mecab分词系统安装
+###Installation of Mecab Word Segmentation System
 
 
-1. 无法使用pip安装Mecab时，从网站下载安装包
+1. When you cannot install Mecab through pip, download the installation package from the website
  
     [Mecab Japanese word segmentation system](http://taku910.github.io/mecab/)
 
-2. 根据安装教程安装Mecab
+2. Install Mecab according to the installation tutorial
 
-    [windows10+py36+MeCab安装总结](https://blog.csdn.net/ZYXpaidaxing/article/details/81913708)
+    [windows10+py36+MeCab installation](https://blog.csdn.net/ZYXpaidaxing/article/details/81913708)
 
 
-### 配置环境
+### Configuration Environment
 
-1. 安装python3.6.6
-2. 安装pycharm
-3. 安装virtualenv10.0.1
+1. Install python3.6.6
+2. Install pycharm
+3. Install virtualenv10.0.1
 
        pip install virtualenv
 
-4. 构造项目目录，为项目安装虚拟环境
+4. Construct the project directory to install the virtual environment for the project
 
        virtualenv venv --no-site-packages
 
-5. 启动虚拟环境，安装所需类库
-    * Linux或Mac启用虚拟环境
+5. Start the virtual environment and install the required libraries
+    * Start the virtual environment in Linux or Mac
     
           source venv/bin/activate
     
-    * Windows启用虚拟环境
+    * Start the virtual environment in Windows
     
           venv\Scripts\activate
     
-6. 安装所需类库
+6. Install the required libraries
     
        pip install -r requirements.txt
 
-7. 在虚拟环境中训练模型测试模型
+7. Operations such as running programs can be performed in a virtual environment 
 
        python controller.py 
+       python ImageNet_utils.py
+       python ImageNet_train.py
   
-8. 离开虚拟环境
+8. Close the virtual environment
 
        deactivate
 
 
-###预测文本相似度
+###Predict Text/Photo Similarity
 
-1. 运行app.py
+1. Run app.py
 
        python app.py
 
-2. 使用postman打开http://172.29.226.176:5500/eval
+2. Use postman software to open http://172.29.226.176:5500/eval
 
-3. 设置请求为Post，在Headers里设置KEY为Content-Type，VALUE为application/form-data
+3. Set the request to Post, KEY to Content-Type and VALUE to application/form-data in Headers.
 
-4. 设置Body的KEY依次为article_content、record_content、content_type、record_id，类型均为txt
+4. Set the KEY for Body to article_content, record_content, content_type, record_id and article_id.
 
-5. 在article_content与record_content中输入待识别文本的base64编码，在content_type中输入txt，设置record_id，然后点击Send发送数据
+5. Enter the base64 encoding of the text/photo in article_content and record_content, enter 'txt' or 'photo' in content_type, set record_id and article_id, and then click Send to send the data.
 
-6. 获得返回结果，同时结果会被发送到 http://172.29.226.64:8080/api/score/receive
+6. Results will be returned and sent to  http://172.29.226.64:8080/api/score/receive
 
 
-### 参考:
+### Reference resources
 
 1. [Siamese Recurrent Architectures for Learning Sentence Similarity (2016)](https://www.aaai.org/ocs/index.php/AAAI/AAAI16/paper/view/12195)
 2. Inspired from Tensorflow Implementation of  https://github.com/dhwajraj/deep-siamese-text-similarity

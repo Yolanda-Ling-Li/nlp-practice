@@ -23,7 +23,7 @@ def load_siamese_model():
     global graph
     graph = tf.get_default_graph()  #获得默认图
     global siamese_model,siamese_model_pic
-    # siamese_model = load_model(app.config['SIAMESE_MODEL_PIC_FILE'])
+    siamese_model = load_model(app.config['SIAMESE_MODEL_FILE'])
     siamese_model_pic = create_siamese(input_shape)
     siamese_model_pic.load_weights(app.config['SIAMESE_MODEL_PIC_FILE'])
 
